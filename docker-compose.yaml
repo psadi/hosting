@@ -115,6 +115,11 @@ services:
       - PROXY_DOMAIN=code.picolo.duckdns.org
     volumes:
       - /tb-vol/hosting/services/code/config:/config
+    healthcheck:
+      test: [ "CMD-SHELL", "curl -o /dev/null -s -w '%{http_code}' 'http://localhost:8443/healthz'" ]
+      interval: 10s
+      timeout: 10s
+      retries: 5
     restart: unless-stopped
 
   drawio:
@@ -123,14 +128,63 @@ services:
     container_name: draw
     image: jgraph/drawio
     restart: unless-stopped
+    healthcheck:
+      test: [ "CMD-SHELL", "curl -o /dev/null -s -w '%{http_code}' 'http://localhost:8080/health'" ]
+      interval: 10s
+      timeout: 10s
+      retries: 5
 
   excalidraw:
-      stdin_open: true
-      tty: true
-      container_name: excalidraw
-      image: excalidraw/excalidraw:latest
+    stdin_open: true
+    tty: true
+    container_name: excalidraw
+    image: excalidraw/excalidraw:latest
+    healthcheck:
+      test: [ "CMD-SHELL", "curl -o /dev/null -s -w '%{http_code}' 'http://localhost:80/health'" ]
+      interval: 10s
+      timeout: 10s
+      retries: 5
+
+  glances:
+    container_name: glances
+    image: nicolargo/glances:latest
+    restart: always
+    pid: host
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+    environment:
+      - "GLANCES_OPT=-w"
+
+  pihole:
+    container_name: pihole
+    image: docker.io/cbcrowe/pihole-unbound:latest
+    hostname: ${HOSTNAME}
+    domainname: ${DOMAIN_NAME}
+    #    ports:
+    #      - 2011:443
+    #      - 53:53/tcp
+    #      - 53:53/udp
+    #      - ${PIHOLE_WEBPORT:-80}:80/tcp
+    environment:
+      - FTLCONF_LOCAL_IPV4=${FTLCONF_LOCAL_IPV4}
+      - TZ=${TZ:-UTC}
+      - WEBPASSWORD=${PASSWORD}
+      - WEBTHEME=${WEBTHEME:-default-dark}
+      - REV_SERVER=${REV_SERVER:-false}
+      - REV_SERVER_TARGET=${REV_SERVER_TARGET}
+      - REV_SERVER_DOMAIN=${REV_SERVER_DOMAIN}
+      - REV_SERVER_CIDR=${REV_SERVER_CIDR}
+      - PIHOLE_DNS_=127.0.0.1#5335
+      - DNSSEC="true"
+      - DNSMASQ_LISTENING=single
+    volumes:
+      - etc_pihole-unbound:/etc/pihole:rw
+      - etc_pihole_dnsmasq-unbound:/etc/dnsmasq.d:rw
+    restart: unless-stopped
 
 volumes:
-    portainer_data:
-        external: true
-        name: portainer_data
+  portainer_data:
+      external: true
+      name: portainer_data
+  etc_pihole-unbound:
+  etc_pihole_dnsmasq-unbound:
