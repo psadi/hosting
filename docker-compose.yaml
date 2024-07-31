@@ -160,10 +160,10 @@ services:
     image: docker.io/cbcrowe/pihole-unbound:latest
     hostname: ${HOSTNAME}
     domainname: ${DOMAIN_NAME}
-    #    ports:
+    ports:
     #      - 2011:443
-    #      - 53:53/tcp
-    #      - 53:53/udp
+      - 53:53/tcp
+      - 53:53/udp
     #      - ${PIHOLE_WEBPORT:-80}:80/tcp
     environment:
       - FTLCONF_LOCAL_IPV4=${FTLCONF_LOCAL_IPV4}
