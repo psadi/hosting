@@ -1,1 +1,4 @@
-services
+services/
+services/**/*
+!services/**/docker-compose.yaml
+!services/**/docker-compose.yml
