@@ -1,0 +1,14 @@
+---
+
+services:
+  drawio:
+    stdin_open: true
+    tty: true
+    container_name: draw
+    image: jgraph/drawio
+    restart: unless-stopped
+    healthcheck:
+      test: [ "CMD-SHELL", "curl -o /dev/null -s -w '%{http_code}' 'http://localhost:8080/health'" ]
+      interval: 10s
+      timeout: 10s
+      retries: 5

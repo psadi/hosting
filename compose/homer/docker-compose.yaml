@@ -1,0 +1,9 @@
+---
+
+services:
+  homer:
+    container_name: homer
+    image: b4bz/homer:latest
+    volumes:
+      - "${SERVICES_DIR}/homer/assets:/www/assets"
+    restart: always

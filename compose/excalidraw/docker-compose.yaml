@@ -1,0 +1,14 @@
+---
+
+services:
+  excalidraw:
+    stdin_open: true
+    tty: true
+    container_name: excalidraw
+    image: excalidraw/excalidraw:latest
+    healthcheck:
+      test: [ "CMD-SHELL", "curl -o /dev/null -s -w '%{http_code}' 'http://localhost:80/health'" ]
+      interval: 10s
+      timeout: 10s
+      retries: 5
+

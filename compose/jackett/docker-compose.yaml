@@ -1,0 +1,15 @@
+---
+services:
+  jackett:
+    image: lscr.io/linuxserver/jackett:latest
+    container_name: jackett
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=$TZ
+      - AUTO_UPDATE=true
+    volumes:
+      - "${SERVICES_DIR}/jackett/data:/config"
+      - "${SERVICES_DIR}/jackett/blackhole:/downloads"
+    restart: unless-stopped
+

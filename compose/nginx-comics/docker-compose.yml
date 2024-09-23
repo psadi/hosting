@@ -1,0 +1,14 @@
+version: "3.5"
+services:
+  nginx-comics:
+    container_name: comics
+    image: nginx:latest
+    restart: unless-stopped
+    volumes:
+      - "${SERVICES_DIR}/nginx-comics/nginx.conf:/etc/nginx/nginx.conf"
+      - /tb-vol/media/comics:/usr/share/nginx/html
+    healthcheck:
+      test: [ "CMD-SHELL", "curl -o /dev/null -s -w '%{http_code}' 'http://localhost:80/health'" ]
+      interval: 10s
+      timeout: 10s
+      retries: 5

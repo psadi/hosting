@@ -1,0 +1,20 @@
+---
+
+services:
+  jellyfin:
+    image: jellyfin/jellyfin
+    container_name: jellyfin
+    volumes:
+      - "${SERVICES_DIR}/jellyfin/config:/config"
+      - "${SERVICES_DIR}/jellyfin/cache:/cache"
+      - /tb-vol/media/tvshows:/data/tvshows
+      - /tb-vol/media/videos:/data/videos
+      - /tb-vol/media/movies:/data/movies
+      - /tb-vol/Pictures:/data/gallery
+    restart: unless-stopped
+    runtime: nvidia
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - capabilities: [gpu]

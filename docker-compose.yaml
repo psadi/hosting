@@ -1,23 +1,14 @@
 ---
 
 include:
-  - /tb-vol/hosting/services/authelia/docker-compose.yaml
-  - /tb-vol/hosting/services/nginx-pm/docker-compose.yaml
-  - /tb-vol/hosting/services/code/docker-compose.yaml
-  - /tb-vol/hosting/services/draw.io/docker-compose.yaml
-  - /tb-vol/hosting/services/excalidraw/docker-compose.yaml
-  - /tb-vol/hosting/services/homer/docker-compose.yaml
-  - /tb-vol/hosting/services/s-pdf/docker-compose.yaml
-  - /tb-vol/hosting/services/jellyfin/docker-compose.yaml
-  - /tb-vol/hosting/services/portainer/docker-compose.yaml
-  - /tb-vol/hosting/services/pihole/docker-compose.yaml
-  - /tb-vol/hosting/services/babybuddy/docker-compose.yaml
-  - /tb-vol/hosting/services/glances/docker-compose.yaml
-
-
- 
-
-
-
-
-
+  - "${COMPOSE_DIR}/adguard/docker-compose.yaml"
+  - "${COMPOSE_DIR}/authelia/docker-compose.yaml"
+  - "${COMPOSE_DIR}/draw.io/docker-compose.yaml"
+  - "${COMPOSE_DIR}/excalidraw/docker-compose.yaml"
+  - "${COMPOSE_DIR}/glances/docker-compose.yaml"
+  - "${COMPOSE_DIR}/homer/docker-compose.yaml"
+  - "${COMPOSE_DIR}/jackett/docker-compose.yaml"
+  - "${COMPOSE_DIR}/jellyfin/docker-compose.yaml"
+  - "${COMPOSE_DIR}/nginx-pm/docker-compose.yaml"
+  - "${COMPOSE_DIR}/portainer/docker-compose.yaml"
+  - "${COMPOSE_DIR}/pdf/docker-compose.yaml"

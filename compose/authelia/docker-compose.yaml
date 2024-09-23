@@ -1,0 +1,13 @@
+---
+
+services:
+  authelia:
+    container_name: 'authelia'
+    image: 'authelia/authelia'
+    restart: 'unless-stopped'
+    expose:
+      - 9091
+    volumes:
+      - "${SERVICES_DIR}/authelia/config:/config"
+    environment:
+      - TZ=${TZ:-UTC}
